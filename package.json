@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "main": "node index.js",
-    "dev": "node index.js --watch",
+    "main": "node src/index.js",
+    "dev": "node src/index.js --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,5 +20,6 @@
     "express-validator": "^7.2.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.1"
-  }
+  },
+  "type": "module"
 }
