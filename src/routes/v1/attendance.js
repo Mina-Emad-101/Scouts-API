@@ -1,6 +1,7 @@
 import Express from "express";
 import Attendance from "../../models/v1/attendance.js";
-import { getDate } from "../../utils.js";
+import { getDate, mapIDs } from "../../utils.js";
+import Scout from "../../models/v1/scouts.js";
 
 const router = Express.Router();
 
@@ -15,7 +16,10 @@ router.get("/attendance/today", async (req, res) => {
 
 	if (!attendance) return res.sendStatus(404);
 
-	return res.json(attendance);
+	const attendanceJSON = attendance.toJSON();
+	await mapIDs(attendanceJSON);
+
+	return res.json(attendanceJSON);
 });
 
 router.get("/attendance", async (req, res) => {
@@ -30,11 +34,21 @@ router.get("/attendance", async (req, res) => {
 
 	if (!attendances) return res.sendStatus(404);
 
-	return res.json(attendances);
+	const attendancesJSON = attendances.map((attendance) => attendance.toJSON());
+	await Promise.all(
+		attendancesJSON.map(async (attendance) => {
+			await mapIDs(attendance);
+		}),
+	);
+
+	return res.json(attendancesJSON);
 });
 
 router.post("/attendance", async (req, res) => {
 	const { scout_id } = req.body;
+
+	const scout = await Scout.findOne({ scout_id: scout_id });
+	if (!scout) return res.sendStatus(404);
 
 	const { day, month, year } = getDate();
 
