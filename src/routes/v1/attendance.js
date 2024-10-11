@@ -4,7 +4,20 @@ import Attendance from "../../models/v1/attendance.js";
 const router = Express.Router();
 
 router.get("/attendance", async (req, res) => {
-	// TODO
+	const date = new Date();
+	const day = date.getUTCDate();
+	const month = date.getUTCMonth() + 1;
+	const year = date.getUTCFullYear();
+
+	const attendance = await Attendance.findOne({
+		day: day,
+		month: month,
+		year: year,
+	});
+
+	if (!attendance) return res.sendStatus(404);
+
+	return res.json(attendance);
 });
 
 router.post("/attendance", async (req, res) => {
