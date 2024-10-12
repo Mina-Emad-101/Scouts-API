@@ -11,15 +11,16 @@ const app = Express();
 // Middlewares
 app.use(cors());
 app.use(Express.json());
+app.use(Express.urlencoded({ extended: true }));
 
 mongoose
-	.connect("mongodb://localhost:27017/scouts")
-	.then((_) => console.log("connected to DB"));
+  .connect("mongodb://localhost:27017/scouts")
+  .then((_) => console.log("connected to DB"));
 
 // Routes
 app.use("/api/v1", attendanceRouter);
 app.use("/api/v1", scoutsRouter);
 
 app.listen(PORT, HOST, () => {
-	console.log(`Listening on ${HOST}:${PORT}`);
+  console.log(`Listening on ${HOST}:${PORT}`);
 });
