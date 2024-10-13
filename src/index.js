@@ -4,8 +4,8 @@ import mongoose from "mongoose";
 import attendanceRouter from "./routes/v1/attendance.js";
 import scoutsRouter from "./routes/v1/scouts.js";
 
-const PORT = process.env.PORT || 8000;
-const HOST = process.env.HOST || "127.0.0.1";
+const PORT = process.env.PORT;
+const HOST = process.env.HOST;
 const app = Express();
 
 // Middlewares
@@ -15,7 +15,9 @@ app.use(Express.urlencoded({ extended: true }));
 
 mongoose
   .connect(
-    `mongodb+srv://mina:${process.env.DBPASSWORD}@cluster0.yjr3f.mongodb.net/social?retryWrites=true&w=majority&appName=Cluster0`,
+    process.env.NODE_ENV === "development"
+      ? "mongodb://localhost:27017/scouts"
+      : `mongodb+srv://mina:${process.env.DBPASSWORD}@cluster0.yjr3f.mongodb.net/scouts?retryWrites=true&w=majority&appName=Cluster0`,
   )
   .then(() => console.log("Connected to MongoDB"));
 
