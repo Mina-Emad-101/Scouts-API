@@ -5,14 +5,15 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>Attendance</title>
-	<script src="index.js"></script>
+	<link rel="stylesheet" href="styles.css" />
+	<script src="scripts.js"></script>
 </head>
 
 <body>
-	<form>
+	<form name="form1" method="POST" onsubmit="return signAttendance()">
 		<h3>ID:</h3>
 		<input type="number" name="scout_id" id="scout_id" />
-		<button type="submit" onclick="">Submit</button>
+		<button type="submit">Submit</button>
 	</form>
 </body>
 
