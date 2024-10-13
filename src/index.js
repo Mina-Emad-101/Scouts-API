@@ -14,8 +14,10 @@ app.use(Express.json());
 app.use(Express.urlencoded({ extended: true }));
 
 mongoose
-  .connect("mongodb://localhost:27017/scouts")
-  .then((_) => console.log("connected to DB"));
+  .connect(
+    `mongodb+srv://mina:${process.env.DBPASSWORD}@cluster0.yjr3f.mongodb.net/social?retryWrites=true&w=majority&appName=Cluster0`,
+  )
+  .then(() => console.log("Connected to MongoDB"));
 
 // Routes
 app.use("/api/v1", attendanceRouter);
