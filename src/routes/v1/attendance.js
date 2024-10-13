@@ -14,7 +14,7 @@ router.get("/attendance/today", async (req, res) => {
     year: year,
   });
 
-  if (!attendances) return res.sendStatus(404);
+  if (attendances.length === 0) return res.sendStatus(404);
 
   const attendancesJSON = attendances.map((attendance) => attendance.toJSON());
   await Promise.all(
@@ -37,7 +37,7 @@ router.get("/attendance", async (req, res) => {
 
   const attendances = await Attendance.find(filter);
 
-  if (!attendances) return res.sendStatus(404);
+  if (attendances.length === 0) return res.sendStatus(404);
 
   const attendancesJSON = attendances.map((attendance) => attendance.toJSON());
   await Promise.all(
