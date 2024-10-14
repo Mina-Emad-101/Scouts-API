@@ -1,4 +1,4 @@
-const createTemplate = () => `
+export default () => `
 <html lang="en">
 
 <head>
@@ -17,5 +17,3 @@ const createTemplate = () => `
 
 </html>
 `;
-
-export default createTemplate;
