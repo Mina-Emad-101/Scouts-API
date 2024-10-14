@@ -1,4 +1,4 @@
-import { BASE_URL } from "../utils";
+const BASE_URL = window.location.origin;
 
 async function signAttendance() {
 	const trash = document.getElementsByClassName("box")[0];
@@ -43,13 +43,9 @@ async function signAttendance() {
 }
 
 async function createScout() {
-	const boxes = document.getElementsByClassName("box");
-	const brs = document.body.getElementsByTagName("br");
-	if (boxes.length > 0) {
-		for (let i = 0; i < boxes.length; i++) {
-			boxes[i].remove();
-			brs[brs.length - 1].remove();
-		}
+	const trash = document.getElementsByClassName("box");
+	for (let i = trash.length - 1; i >= 0; i--) {
+		trash[i].remove();
 	}
 
 	const result = await fetch(`${BASE_URL}/api/v1/scouts`, {
@@ -66,7 +62,9 @@ async function createScout() {
 	}).catch((err) => console.log(err));
 
 	if (result.ok) {
-		document.body.appendChild(document.createElement("br"));
+		const br = document.createElement("br");
+		br.classList.add("box");
+		document.body.appendChild(br);
 		const div = document.createElement("div");
 		div.classList.add("box");
 		const p = document.createElement("p");
@@ -74,10 +72,13 @@ async function createScout() {
 		div.appendChild(p);
 		document.body.appendChild(div);
 		div.classList.add("success_box");
-		p.innerHTML = "Added Successfully";
+		p.innerHTML = `${document.getElementById("name").value} Added Successfully`;
 	} else if (result.status === 400) {
-		result.body.errors.map((error) => {
-			document.body.appendChild(document.createElement("br"));
+		const errors = await result.json();
+		errors.map((error) => {
+			const br = document.createElement("br");
+			br.classList.add("box");
+			document.body.appendChild(br);
 			const div = document.createElement("div");
 			div.classList.add("box");
 			const p = document.createElement("p");
@@ -88,7 +89,9 @@ async function createScout() {
 			p.innerHTML = error.msg;
 		});
 	} else {
-		document.body.appendChild(document.createElement("br"));
+		const br = document.createElement("br");
+		br.classList.add("box");
+		document.body.appendChild(br);
 		const div = document.createElement("div");
 		div.classList.add("box");
 		const p = document.createElement("p");
