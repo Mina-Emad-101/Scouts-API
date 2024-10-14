@@ -1,3 +1,5 @@
+const NODE_ENV = process.env.NODE_ENV || "development";
+
 async function signAttendance() {
 	const trash = document.getElementsByClassName("box")[0];
 	const brs = document.body.getElementsByTagName("br");
@@ -7,7 +9,9 @@ async function signAttendance() {
 	}
 
 	const result = await fetch(
-		"https://scouts-api.onrender.com/api/v1/attendance",
+		NODE_ENV === "development"
+			? "https://127.0.0.1:8000/api/v1/attendance"
+			: "https://scouts-api.onrender.com/api/v1/attendance",
 		{
 			method: "POST",
 			body: JSON.stringify({

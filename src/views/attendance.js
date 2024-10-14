@@ -1,4 +1,4 @@
-<!doctype html>
+const createTemplate = () => `
 <html lang="en">
 
 <head>
@@ -16,3 +16,6 @@
 </body>
 
 </html>
+`;
+
+export default createTemplate;
