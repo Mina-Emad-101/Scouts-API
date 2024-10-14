@@ -1,3 +1,5 @@
+import { BASE_URL } from "../utils";
+
 async function signAttendance() {
 	const trash = document.getElementsByClassName("box")[0];
 	const brs = document.body.getElementsByTagName("br");
@@ -6,8 +8,8 @@ async function signAttendance() {
 		brs[brs.length - 1].remove();
 	}
 
-	// const result = await fetch(`${BASE_URL}/api/v1/attendance`, {
-	const result = await fetch(`http://127.0.0.1:8000/api/v1/attendance`, {
+	const result = await fetch(`${BASE_URL}/api/v1/attendance`, {
+		// const result = await fetch(`http://127.0.0.1:8000/api/v1/attendance`, {
 		method: "POST",
 		body: JSON.stringify({
 			scout_id: document.getElementById("scout_id").value,
@@ -50,8 +52,8 @@ async function createScout() {
 		}
 	}
 
-	// const result = await fetch(`${BASE_URL}/api/v1/scouts`, {
-	const result = await fetch(`http://127.0.0.1:8000/api/v1/scouts`, {
+	const result = await fetch(`${BASE_URL}/api/v1/scouts`, {
+		// const result = await fetch(`http://127.0.0.1:8000/api/v1/scouts`, {
 		method: "POST",
 		body: JSON.stringify({
 			name: document.getElementById("name").value,
