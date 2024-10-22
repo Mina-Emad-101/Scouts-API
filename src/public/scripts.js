@@ -121,9 +121,15 @@ async function getScouts() {
   ).catch((err) => console.log(err));
 
   if (result.ok) {
+    const trash = document.getElementsByClassName("trash");
+    for (let i = trash.length - 1; i >= 0; i--) {
+      trash[i].remove();
+    }
+
     const scouts = await result.json();
     scouts.map((scout) => {
       const tr = document.createElement("tr");
+      tr.classList.append("trash");
 
       let td = document.createElement("td");
       td.innerText = scout.name;
@@ -143,6 +149,7 @@ async function getScouts() {
   } else {
     const table = document.getElementById("table");
     const tr = document.createElement("tr");
+    tr.classList.append("trash");
     const td = document.createElement("td");
     td.innerText = `Unable to Get Data | Error Code ${result.status}`;
     table.appendChild(tr).appendChild(td);
