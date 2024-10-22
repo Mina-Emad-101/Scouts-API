@@ -5,23 +5,29 @@ import { createSchema } from "../../validators/scouts.js";
 
 const router = Express.Router();
 
+router.get("/scouts", async (req, res) => {
+  const scouts = await Scout.find();
+
+  return res.json(scouts);
+});
+
 router.post("/scouts", checkSchema(createSchema), async (req, res) => {
-	const result = validationResult(req);
-	if (!result.isEmpty()) return res.status(400).json(result.array());
+  const result = validationResult(req);
+  if (!result.isEmpty()) return res.status(400).json(result.array());
 
-	const { name, level, sector } = req.body;
+  const { name, level, sector } = req.body;
 
-	const scout = new Scout({
-		scout_id: (await Scout.collection.countDocuments()) + 1,
-		name: name,
-		level: level,
-		sector: sector,
-	});
+  const scout = new Scout({
+    scout_id: (await Scout.collection.countDocuments()) + 1,
+    name: name,
+    level: level,
+    sector: sector,
+  });
 
-	await scout.save().then(
-		(scout) => res.json(scout),
-		(err) => res.status(500).json({ error: err }),
-	);
+  await scout.save().then(
+    (scout) => res.json(scout),
+    (err) => res.status(500).json({ error: err }),
+  );
 });
 
 export default router;
