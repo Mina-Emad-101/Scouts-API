@@ -129,7 +129,7 @@ async function getScouts() {
     const scouts = await result.json();
     scouts.map((scout) => {
       const tr = document.createElement("tr");
-      tr.classList.append("trash");
+      tr.classList.add("trash");
 
       let td = document.createElement("td");
       td.innerText = scout.name;
