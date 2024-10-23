@@ -36,3 +36,12 @@ th {
 tr:nth-child(even) {
 	background-color: #dddddd;
 }
+
+.tr {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+	border: 1px solid #dddddd;
+	text-align: center;
+	padding: 8px;
+}

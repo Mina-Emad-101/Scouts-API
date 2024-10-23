@@ -1,4 +1,4 @@
-export default () => `
+export default (id) => `
 <html lang="en">
 
 <head>
@@ -10,10 +10,17 @@ export default () => `
 </head>
 
 <body>
-	<h3>ID:</h3>
-	<input type="number" name="scout_id" id="scout_id" />
-	<button type="submit" onclick="signAttendance()">Submit</button>
+	<h2 id="title" class="tr"></h2>
+	<table id="table">
+		<tr>
+			<th>م</th>
+			<th>الاسم</th>
+		</tr>
+	</table>
 </body>
+<script>
+	getAttendance("${id}");
+</script>
 
 </html>
 `;

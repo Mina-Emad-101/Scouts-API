@@ -11,7 +11,6 @@ export default () => `
 	</head>
 
 	<body dir="rtl">
-		<h3><button onclick="getScouts()">Show Data</button></h3>
 		<table id="table">
 			<tr>
 				<th>الاسم</th>
@@ -20,6 +19,10 @@ export default () => `
 			</tr>
 		</table>
 	</body>
+
+	<script>
+		getScouts();
+	</script>
 
 </html>
 `;

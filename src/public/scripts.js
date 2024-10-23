@@ -109,16 +109,13 @@ async function createScout() {
 }
 
 async function getScouts() {
-  const result = await fetch(
-    `${BASE_URL}/api/v1/scouts${window.location.search}`,
-    {
-      // const result = await fetch(`http://127.0.0.1:8000/api/v1/scouts`, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
+  const result = await fetch(`${BASE_URL}/api/v1/scouts`, {
+    // const result = await fetch(`http://127.0.0.1:8000/api/v1/scouts`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
     },
-  ).catch((err) => console.log(err));
+  }).catch((err) => console.log(err));
 
   if (result.ok) {
     const trash = document.getElementsByClassName("trash");
@@ -141,6 +138,100 @@ async function getScouts() {
 
       td = document.createElement("td");
       td.innerText = scout.level;
+      tr.appendChild(td);
+
+      const table = document.getElementById("table");
+      table.appendChild(tr);
+    });
+  } else {
+    const table = document.getElementById("table");
+    const tr = document.createElement("tr");
+    tr.classList.append("trash");
+    const td = document.createElement("td");
+    td.innerText = `Unable to Get Data | Error Code ${result.status}`;
+    table.appendChild(tr).appendChild(td);
+  }
+}
+
+async function getAttendances() {
+  const result = await fetch(`${BASE_URL}/api/v1/attendance`, {
+    // const result = await fetch(`http://127.0.0.1:8000/api/v1/scouts`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  }).catch((err) => console.log(err));
+
+  if (result.ok) {
+    const trash = document.getElementsByClassName("trash");
+    for (let i = trash.length - 1; i >= 0; i--) {
+      trash[i].remove();
+    }
+
+    const attendances = await result.json();
+    attendances.map((attendance) => {
+      const tr = document.createElement("tr");
+      tr.classList.add("trash");
+
+      let td = document.createElement("td");
+      td.innerHTML = `<a href="${BASE_URL}/attendance/${attendance._id}">${attendance._id}</a>`;
+      tr.appendChild(td);
+
+      td = document.createElement("td");
+      td.innerText = `${attendance.day}-${attendance.month}-${attendance.year}`;
+      tr.appendChild(td);
+
+      td = document.createElement("td");
+      td.innerText = sectorMap[attendance.sector];
+      tr.appendChild(td);
+
+      const table = document.getElementById("table");
+      table.appendChild(tr);
+    });
+  } else {
+    const table = document.getElementById("table");
+    const tr = document.createElement("tr");
+    tr.classList.append("trash");
+    const td = document.createElement("td");
+    td.innerText = `Unable to Get Data | Error Code ${result.status}`;
+    table.appendChild(tr).appendChild(td);
+  }
+}
+
+async function getAttendance(id) {
+  const result = await fetch(`${BASE_URL}/api/v1/attendance/${id}`, {
+    // const result = await fetch(`http://127.0.0.1:8000/api/v1/scouts`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  }).catch((err) => console.log(err));
+
+  if (result.ok) {
+    const trash = document.getElementsByClassName("trash");
+    for (let i = trash.length - 1; i >= 0; i--) {
+      trash[i].remove();
+    }
+
+    const attendance = await result.json();
+
+    const title = document.getElementById("title");
+    title.innerText = `${attendance.day}-${attendance.month}-${attendance.year}`;
+
+    attendance.scouts.map((scout) => {
+      const tr = document.createElement("tr");
+      tr.classList.add("trash");
+
+      // let td = document.createElement("td");
+      // td.innerHTML = `<a href="${BASE_URL}/attendance/${attendance._id}">${attendance._id}</a>`;
+      // tr.appendChild(td);
+
+      td = document.createElement("td");
+      td.innerText = scout.scout_id;
+      tr.appendChild(td);
+
+      td = document.createElement("td");
+      td.innerText = scout.name;
       tr.appendChild(td);
 
       const table = document.getElementById("table");
