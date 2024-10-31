@@ -2,11 +2,21 @@ import Express from "express";
 import Scout from "../../models/v1/scouts.js";
 import { checkSchema, validationResult } from "express-validator";
 import { createSchema } from "../../validators/scouts.js";
+import { resourcifyScout } from "../../utils.js";
 
 const router = Express.Router();
 
 router.get("/scouts", async (req, res) => {
   const scouts = await Scout.find();
+
+  // const scoutsJSON = scouts.map((scout) => scout.toJSON());
+  // await Promise.all(
+  //   scoutsJSON.map(async (scout) => {
+  //     await resourcifyScout(scout);
+  //   }),
+  // );
+  //
+  // return res.json(scoutsJSON);
 
   return res.json(scouts);
 });
@@ -30,7 +40,7 @@ router.post("/scouts", checkSchema(createSchema), async (req, res) => {
   );
 });
 
-router.delete("/socuts/:id", async (req, res) => {
+router.delete("/scouts/:id", async (req, res) => {
   const id = req.params.id;
   const scout = await Scout.findById(id);
   await scout.deleteOne();

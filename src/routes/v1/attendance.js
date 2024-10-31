@@ -1,6 +1,6 @@
 import Express from "express";
 import Attendance from "../../models/v1/attendance.js";
-import { getDate, resourcify } from "../../utils.js";
+import { getDate, resourcifyAttendance } from "../../utils.js";
 import Scout from "../../models/v1/scouts.js";
 
 const router = Express.Router();
@@ -19,7 +19,7 @@ router.get("/attendance/today", async (req, res) => {
   const attendancesJSON = attendances.map((attendance) => attendance.toJSON());
   await Promise.all(
     attendancesJSON.map(async (attendance) => {
-      await resourcify(attendance);
+      await resourcifyAttendance(attendance);
     }),
   );
 
@@ -42,7 +42,7 @@ router.get("/attendance", async (req, res) => {
   const attendancesJSON = attendances.map((attendance) => attendance.toJSON());
   await Promise.all(
     attendancesJSON.map(async (attendance) => {
-      await resourcify(attendance);
+      await resourcifyAttendance(attendance);
     }),
   );
 
@@ -54,7 +54,7 @@ router.get("/attendance/:id", async (req, res) => {
   await Attendance.findById(id).then(
     async (attendance) => {
       attendance = attendance.toJSON();
-      await resourcify(attendance);
+      await resourcifyAttendance(attendance);
       return res.json(attendance);
     },
     (err) => res.sendStatus(404),
