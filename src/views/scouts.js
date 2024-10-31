@@ -13,7 +13,7 @@ export default () => `
 	<body dir="rtl">
 		<select name="level" id="level" onchange="getScouts()">
 			${(() => {
-        const result = "";
+        let result = "";
         for (let i = 0; i <= 12; i++)
           result += `<option value="${i}">${i}</option>`;
         return result;
