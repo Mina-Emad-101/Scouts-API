@@ -6,7 +6,7 @@ export const createSchema = {
     notEmpty: { errorMessage: "Level Cannot Be Empty" },
     isNumber: { errorMessage: "Level Has To Be A Number" },
     isInt: {
-      errorMessage: "Level Has To Be Between 1 and 12",
+      errorMessage: "Level Has To Be Between 0 and 12",
       options: [{ min: 0, max: 12 }],
     },
   },
