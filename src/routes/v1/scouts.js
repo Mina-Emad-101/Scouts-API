@@ -21,9 +21,10 @@ router.post("/scouts", checkSchema(createSchema), async (req, res) => {
   if (!result.isEmpty()) return res.status(400).json(result.array());
 
   const { name, level, sector } = req.body;
+  const scouts = await Scout.find();
 
   const scout = new Scout({
-    scout_id: (await Scout.collection.countDocuments()) + 1,
+    scout_id: scouts[scouts.length - 1].scout_id + 1,
     name: name,
     level: level,
     sector: sector,
