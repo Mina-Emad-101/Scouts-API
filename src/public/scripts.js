@@ -147,7 +147,7 @@ async function getScouts() {
 
       td = document.createElement("td");
       td.innerHTML = `
-				<button value="Delete" onclick="deleteScout('${scout.id}')"></button>
+				<button onclick="deleteScout('${scout.id}')">Delete</button>
 			`;
       tr.appendChild(td);
 
