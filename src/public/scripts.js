@@ -3,6 +3,7 @@ const sectorMap = {
   1: "أشبال و زهرات",
   2: "كشافة و مرشدات",
   3: "متقدم و رائدات",
+  4: "جوالة",
 };
 
 async function signAttendance() {
