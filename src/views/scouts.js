@@ -12,6 +12,7 @@ export default () => `
 
 	<body dir="rtl">
 		<select name="level" id="level" onchange="getScouts()">
+			<option value="" selected>All</option>
 			${(() => {
         let result = "";
         for (let i = 0; i <= 12; i++)
