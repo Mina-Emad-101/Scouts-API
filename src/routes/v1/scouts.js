@@ -11,9 +11,7 @@ router.get("/scouts", async (req, res) => {
 
   const scoutsJSON = scouts.map((scout) => scout.toJSON());
   await Promise.all(
-    scoutsJSON.map(async (scout) => {
-      await resourcifyScout(scout);
-    }),
+    scoutsJSON.map(async (scout) => await resourcifyScout(scout)),
   );
 
   return res.json(scoutsJSON);
