@@ -13,6 +13,7 @@ export default () => `
 	<body dir="rtl">
 		<table id="table">
 			<tr>
+				<th>م</th>
 				<th>الاسم</th>
 				<th>القطاع</th>
 				<th>السنة الدراسية</th>
