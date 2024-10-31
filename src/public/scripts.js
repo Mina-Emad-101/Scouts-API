@@ -145,6 +145,12 @@ async function getScouts() {
       td.innerText = scout.level;
       tr.appendChild(td);
 
+      td = document.createElement("td");
+      td.innerHTML = `
+				<button value="Delete" onclick="deleteScout('${scout.id}')"></button>
+			`;
+      tr.appendChild(td);
+
       const table = document.getElementById("table");
       table.appendChild(tr);
     });
@@ -155,6 +161,20 @@ async function getScouts() {
     const td = document.createElement("td");
     td.innerText = `Unable to Get Data | Error Code ${result.status}`;
     table.appendChild(tr).appendChild(td);
+  }
+}
+
+async function deleteScout(id) {
+  const result = await fetch(`${BASE_URL}/api/v1/scouts/${id}`, {
+    // const result = await fetch(`http://127.0.0.1:8000/api/v1/scouts`, {
+    method: "DELETE",
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  }).catch((err) => console.log(err));
+
+  if (result.ok) {
+    location.reload();
   }
 }
 

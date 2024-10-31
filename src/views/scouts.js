@@ -17,6 +17,7 @@ export default () => `
 				<th>الاسم</th>
 				<th>القطاع</th>
 				<th>السنة الدراسية</th>
+				<th></th>
 			</tr>
 		</table>
 	</body>

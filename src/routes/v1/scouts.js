@@ -30,4 +30,11 @@ router.post("/scouts", checkSchema(createSchema), async (req, res) => {
   );
 });
 
+router.delete("/socuts/:id", async (req, res) => {
+  const id = req.params.id;
+  const scout = await Scout.findById(id);
+  await scout.deleteOne();
+  return res.sendStatus(200);
+});
+
 export default router;
