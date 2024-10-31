@@ -9,16 +9,14 @@ const router = Express.Router();
 router.get("/scouts", async (req, res) => {
   const scouts = await Scout.find();
 
-  // const scoutsJSON = scouts.map((scout) => scout.toJSON());
-  // await Promise.all(
-  //   scoutsJSON.map(async (scout) => {
-  //     await resourcifyScout(scout);
-  //   }),
-  // );
-  //
-  // return res.json(scoutsJSON);
+  const scoutsJSON = scouts.map((scout) => scout.toJSON());
+  await Promise.all(
+    scoutsJSON.map(async (scout) => {
+      await resourcifyScout(scout);
+    }),
+  );
 
-  return res.json(scouts);
+  return res.json(scoutsJSON);
 });
 
 router.post("/scouts", checkSchema(createSchema), async (req, res) => {
