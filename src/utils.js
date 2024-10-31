@@ -31,7 +31,7 @@ export const resourcifyAttendance = async (attendance) => {
 };
 
 export const resourcifyScout = async (scout) => {
-  return {
+  scout = {
     id: scout.id,
     scout_id: scout.scout_id,
     name: scout.name,
