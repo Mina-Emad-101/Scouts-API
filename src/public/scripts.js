@@ -110,7 +110,9 @@ async function createScout() {
 }
 
 async function getScouts() {
-  const result = await fetch(`${BASE_URL}/api/v1/scouts`, {
+  const level = document.getElementById("level").value;
+
+  const result = await fetch(`${BASE_URL}/api/v1/scouts?level=${level}`, {
     // const result = await fetch(`http://127.0.0.1:8000/api/v1/scouts`, {
     method: "GET",
     headers: {

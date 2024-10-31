@@ -11,6 +11,14 @@ export default () => `
 	</head>
 
 	<body dir="rtl">
+		<select name="level" id="level" onchange="getScouts()">
+			${(() => {
+        const result = "";
+        for (let i = 0; i <= 12; i++)
+          result += `<option value="${i}">${i}</option>`;
+        return result;
+      })()}
+		</select>
 		<table id="table">
 			<tr>
 				<th>م</th>

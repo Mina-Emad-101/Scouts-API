@@ -7,7 +7,13 @@ import { resourcifyScout } from "../../utils.js";
 const router = Express.Router();
 
 router.get("/scouts", async (req, res) => {
-  const scouts = await Scout.find();
+  const { level, sector } = req.query;
+  const filter = {};
+
+  if (level) filter.level = level;
+  if (sector) filter.sector = sector;
+
+  const scouts = await Scout.find(filter);
 
   const result = await Promise.all(
     scouts.map(async (scout) => await resourcifyScout(scout)),
