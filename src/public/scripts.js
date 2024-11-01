@@ -141,6 +141,10 @@ async function getScouts() {
       tr.appendChild(td);
 
       td = document.createElement("td");
+      td.innerText = scout.scout_id;
+      tr.appendChild(td);
+
+      td = document.createElement("td");
       td.innerText = sectorMap[scout.sector];
       tr.appendChild(td);
 

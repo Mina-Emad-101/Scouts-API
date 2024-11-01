@@ -26,6 +26,7 @@ export default () => `
 			<tr>
 				<th>م</th>
 				<th>الاسم</th>
+				<th>ID</th>
 				<th>القطاع</th>
 				<th>السنة الدراسية</th>
 				<th></th>
