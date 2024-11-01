@@ -145,7 +145,7 @@ async function getScouts() {
       tr.appendChild(td);
 
       td = document.createElement("td");
-      td.innerText = scout.level;
+      td.innerText = scout.level === 0 ? "قائد" : scout.level;
       tr.appendChild(td);
 
       td = document.createElement("td");

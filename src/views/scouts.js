@@ -11,11 +11,13 @@ export default () => `
 	</head>
 
 	<body dir="rtl">
+		<label for="level">السنة الدراسية</label>
 		<select name="level" id="level" onchange="getScouts()">
 			<option value="" selected>All</option>
+			<option value="0">قادة</option>
 			${(() => {
         let result = "";
-        for (let i = 0; i <= 12; i++)
+        for (let i = 1; i <= 12; i++)
           result += `<option value="${i}">${i}</option>`;
         return result;
       })()}
