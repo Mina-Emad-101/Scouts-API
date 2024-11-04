@@ -2,6 +2,9 @@ import Express from "express";
 import Attendance from "../../models/v1/attendance.js";
 import { getDate, resourcifyAttendance } from "../../utils.js";
 import Scout from "../../models/v1/scouts.js";
+import { checkSchema, validationResult } from "express-validator";
+import { createSchema } from "../../validators/exceptions.js";
+import Exception from "../../models/v1/exception.js";
 
 const router = Express.Router();
 
@@ -90,6 +93,33 @@ router.post("/attendance", async (req, res) => {
   await attendance.save().then(
     (_) => res.sendStatus(200),
     (err) => res.status(500).json({ error: err }),
+  );
+});
+
+router.post("/exception", checkSchema(createSchema), async (req, res) => {
+  const result = validationResult(req);
+  if (!result.isEmpty())
+    return res.status(400).json({ errors: result.array() });
+
+  const { scout_id, reason, day, month, year } = req.body;
+
+  const scout = await Scout.findOne({ scout_id: scout_id });
+  if (!scout) return res.sendStatus(404);
+
+  const prevException = await Exception.findOne({ scout_id: scout_id });
+  if (prevException) return res.sendStatus(403);
+
+  const exception = new Exception({
+    scout_id: scout_id,
+    reason: reason,
+    day: day,
+    month: month,
+    year: year,
+  });
+
+  await exception.save().then(
+    (_) => res.sendStatus(200),
+    (_) => res.sendStatus(500),
   );
 });
 
