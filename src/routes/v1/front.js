@@ -8,11 +8,15 @@ import makeException from "../../views/make-exception.js";
 
 const router = Express.Router();
 
-router.get("/attendance", async (req, res) => {
+router.get("/", (req, res) => {
+  return res.send();
+});
+
+router.get("/attendance", (req, res) => {
   return res.send(attendanceSheets());
 });
 
-router.get("/attendance/:id", async (req, res) => {
+router.get("/attendance/:id", (req, res) => {
   const id = req.params.id;
   return res.send(getAttendance(id));
 });

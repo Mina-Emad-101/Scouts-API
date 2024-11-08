@@ -9,7 +9,9 @@ export default (active_json) => `
 
 /* Style the header links */
 .header a {
-  float: left;
+	display: inline-block;
+	width: 100px;
+	margin: auto;
   color: black;
   text-align: center;
   padding: 12px;
@@ -43,15 +45,21 @@ export default (active_json) => `
   margin: auto;
 }
 
+.header-center a {
+	margin: auto;
+}
+
 /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
 @media screen and (max-width: 500px) {
   .header a {
-    float: none;
-    display: block;
-    text-align: left;
+		width: 100%;
+		margin: auto;
+    display: inline-block;
+    text-align: center;
   }
   .header-center {
-    float: none;
+		width: 100%;
+		margin: auto;
   }
 }
 </style>
