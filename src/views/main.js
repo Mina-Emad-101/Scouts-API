@@ -11,7 +11,7 @@ export default () => `
 	<script src="/scripts.js"></script>
 </head>
 
-<body>
+<body dir="rtl">
 	${header({})}
 </body>
 

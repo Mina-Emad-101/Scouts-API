@@ -11,7 +11,7 @@ export default () => `
 	<script src="/scripts.js"></script>
 </head>
 
-<body>
+<body dir="rtl">
 	${header({ sign_attendance: true })}
 	<h3>ID:</h3>
 	<input type="number" name="scout_id" id="scout_id" />

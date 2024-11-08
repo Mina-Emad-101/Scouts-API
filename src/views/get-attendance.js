@@ -11,7 +11,7 @@ export default (id) => `
 	<script src="/scripts.js"></script>
 </head>
 
-<body>
+<body dir="rtl">
 	${header({})}
 	<h2 id="title" class="tr"></h2>
 	<table id="table">
