@@ -1,3 +1,5 @@
+import header from "./components/header.js";
+
 export default () => `
 <!doctype html>
 <html lang="ar">
@@ -10,6 +12,7 @@ export default () => `
   </head>
 
   <body dir="rtl">
+		${header({ create_scout: true })}
     <h3>الأسم</h3>
     <input type="text" name="name" id="name" />
     <h3>السنة الدراسية (1 - 12) (جوالة: 0)</h3>

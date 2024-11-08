@@ -1,3 +1,5 @@
+import header from "./components/header.js";
+
 export default (id) => `
 <html lang="en">
 
@@ -10,6 +12,7 @@ export default (id) => `
 </head>
 
 <body>
+	${header({})}
 	<h2 id="title" class="tr"></h2>
 	<table id="table">
 		<tr>

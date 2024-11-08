@@ -1,3 +1,5 @@
+import header from "./components/header.js";
+
 export default () => `
 <html lang="en">
 
@@ -10,6 +12,7 @@ export default () => `
 </head>
 
 <body>
+	${header({ make_exception: true })}
 	<h3>ID:</h3>
 	<input type="number" name="scout_id" id="scout_id" />
 	<h3>Reason:</h3>

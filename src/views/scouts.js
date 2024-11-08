@@ -1,3 +1,5 @@
+import header from "./components/header.js";
+
 export default () => `
 <!doctype html>
 <html lang="ar">
@@ -11,6 +13,7 @@ export default () => `
 	</head>
 
 	<body dir="rtl">
+	${header({ scouts: true })}
 		<label for="level">السنة الدراسية</label>
 		<select name="level" id="level" onchange="getScouts()">
 			<option value="" selected>All</option>
