@@ -34,3 +34,6 @@ build/
 
 ### Neovim ###
 .null-ls*
+
+### Docker ###
+docker-compose.yml
