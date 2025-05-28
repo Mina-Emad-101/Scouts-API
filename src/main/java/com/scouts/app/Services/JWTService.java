@@ -36,6 +36,7 @@ public class JWTService {
 				.withIssuedAt(new Date())
 				.withExpiresAt(new Date(System.currentTimeMillis() + this.expiryTimeInMillis))
 				.sign(this.algorithm);
+		System.out.println("JWTTOKEN: " + jwtToken);
 		return jwtToken;
 	}
 
