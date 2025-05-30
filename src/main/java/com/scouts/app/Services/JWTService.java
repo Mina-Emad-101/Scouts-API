@@ -21,9 +21,9 @@ public class JWTService {
 	private String issuer;
 	private Long expiryTimeInMillis;
 
-	public JWTService(@Value("${jwt.secret}") String secret) {
+	public JWTService(@Value("${jwt.secret}") String secret, @Value("${spring.application.name}") String issuer) {
 		this.algorithm = Algorithm.HMAC256(secret);
-		this.issuer = "ScoutsApp";
+		this.issuer = issuer;
 
 		// 60_000 Milliseconds = 1 Minute
 		this.expiryTimeInMillis = 60L * 60_000L;
