@@ -1,9 +1,7 @@
 package com.scouts.app.Services;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import com.scouts.app.Repositories.UserRepository;
 import com.scouts.app.RepoModels.RepoUser;
@@ -25,14 +23,9 @@ public class AuthService {
 
 		if (repoUser == null)
 			throw new InvalidLoginException("User Not Found");
-		if (!repoUser.getPassword().equals(password))
+		if (!BCrypt.checkpw(password, repoUser.getPassword()))
 			throw new InvalidLoginException("Invalid Password");
 
-		return User.builder()
-				.id(repoUser.getId())
-				.name(repoUser.getName())
-				.email(repoUser.getEmail())
-				.role(repoUser.getRole())
-				.build();
+		return new User(repoUser);
 	}
 }
