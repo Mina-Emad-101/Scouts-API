@@ -1,6 +1,9 @@
 package com.scouts.app.Services;
 
+import java.util.Base64;
 import java.util.Date;
+import java.util.Random;
+import java.util.random.RandomGeneratorFactory;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,11 +25,23 @@ public class JWTService {
 	private Long expiryTimeInMillis;
 
 	public JWTService(@Value("${jwt.secret}") String secret, @Value("${spring.application.name}") String issuer) {
-		this.algorithm = Algorithm.HMAC256(secret);
+		String paddedSecret = this.padSecretTo64Bits(secret);
+		String base64Secret = Base64.getEncoder().encodeToString(paddedSecret.getBytes());
+
+		this.algorithm = Algorithm.HMAC256(base64Secret);
+
 		this.issuer = issuer;
 
 		// 60_000 Milliseconds = 1 Minute
 		this.expiryTimeInMillis = 60L * 60_000L;
+	}
+
+	private String padSecretTo64Bits(String secret) {
+		StringBuilder builder = new StringBuilder(secret);
+		for (int i = 0; i < 64 - secret.length(); i++) {
+			builder.append(" ");
+		}
+		return builder.toString();
 	}
 
 	public String sign(Long userID) {
@@ -36,7 +51,6 @@ public class JWTService {
 				.withIssuedAt(new Date())
 				.withExpiresAt(new Date(System.currentTimeMillis() + this.expiryTimeInMillis))
 				.sign(this.algorithm);
-		System.out.println("JWTTOKEN: " + jwtToken);
 		return jwtToken;
 	}
 

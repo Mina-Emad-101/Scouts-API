@@ -41,7 +41,7 @@ public class JWTServiceTest {
 
 	@Test
 	public void verifyExpiredJWT() {
-		String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTY291dHNBcHAiLCJleHAiOjE3NDgzOTMwNTAsInVzZXJJRCI6NSwiaWF0IjoxNzQ4MzkzMDQxfQ.fcRAGZAMUjuoKiiV6piwEXxWWCx3cTNKzudQloS8NVk";
+		String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIlNjb3V0cyBBcHBcIiIsImV4cCI6MTc0ODY1MTI5MCwidXNlcklEIjo1LCJpYXQiOjE3NDg2NTEyODl9.q5EybU1gb5CbNpn9MIMRQeSKoNtt_k0dhg-6wwjwSl8";
 		assertThrows(JWTVerificationException.class, () -> this.jwtService.verify(token));
 	}
 
