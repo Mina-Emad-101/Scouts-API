@@ -54,6 +54,10 @@ public class JWTService {
 		return jwtToken;
 	}
 
+	/**
+	 * Returns UserID found in token's "userID" claim, 
+	 * if claim not found, returns JWTVerificationException
+	 */
 	public Long verify(String token) throws JWTVerificationException {
 		JWTVerifier verifier = JWT.require(this.algorithm)
 				.withIssuer(this.issuer)
