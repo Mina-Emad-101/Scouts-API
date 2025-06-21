@@ -12,7 +12,8 @@ public class User {
 
 	public enum UserRole {
 		USER,
-		ADMIN
+		LEADER,
+		ADMIN,
 	}
 
 	private Long id;

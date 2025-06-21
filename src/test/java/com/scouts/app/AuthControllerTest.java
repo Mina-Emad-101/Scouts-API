@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scouts.app.Http.Responses.LoginResponse;
+import com.scouts.app.Models.User;
 
 import jakarta.transaction.Transactional;
 
@@ -38,6 +39,25 @@ public class AuthControllerTest {
 		String json = """
 				{
 					"email": "admin@gmail.com",
+					"password": "password"
+				}
+				""";
+
+		this.mockMvc.perform(
+				post("/api/auth/login")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(json))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.success").value(true))
+				.andExpect(jsonPath("$.message").isString())
+				.andExpect(jsonPath("$.token").isString());
+	}
+
+	@Test
+	public void loginLeaderCredentials_ReturnsToken() throws Exception {
+		String json = """
+				{
+					"email": "leader@gmail.com",
 					"password": "password"
 				}
 				""";
@@ -114,6 +134,65 @@ public class AuthControllerTest {
 				get("/api/auth/user")
 						.header("Authorization", "Bearer " + token))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.email").value("user@gmail.com"));
+				.andExpect(jsonPath("$.email").value("user@gmail.com"))
+				.andExpect(jsonPath("$.role").value(User.UserRole.USER.toString()));
+	}
+
+	@Test
+	public void authAdminByToken_ReturnsCorrectUser() throws Exception {
+		String json = """
+				{
+					"email": "admin@gmail.com",
+					"password": "password"
+				}
+				""";
+
+		String result = this.mockMvc.perform(
+				post("/api/auth/login")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(json))
+				.andReturn()
+				.getResponse()
+				.getContentAsString();
+
+		ObjectMapper mapper = new ObjectMapper();
+		LoginResponse loginResponse = mapper.readValue(result, LoginResponse.class);
+		String token = loginResponse.getToken();
+
+		this.mockMvc.perform(
+				get("/api/auth/user")
+						.header("Authorization", "Bearer " + token))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.email").value("admin@gmail.com"))
+				.andExpect(jsonPath("$.role").value(User.UserRole.ADMIN.toString()));
+	}
+
+	@Test
+	public void authLeaderByToken_ReturnsCorrectUser() throws Exception {
+		String json = """
+				{
+					"email": "leader@gmail.com",
+					"password": "password"
+				}
+				""";
+
+		String result = this.mockMvc.perform(
+				post("/api/auth/login")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(json))
+				.andReturn()
+				.getResponse()
+				.getContentAsString();
+
+		ObjectMapper mapper = new ObjectMapper();
+		LoginResponse loginResponse = mapper.readValue(result, LoginResponse.class);
+		String token = loginResponse.getToken();
+
+		this.mockMvc.perform(
+				get("/api/auth/user")
+						.header("Authorization", "Bearer " + token))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.email").value("leader@gmail.com"))
+				.andExpect(jsonPath("$.role").value(User.UserRole.LEADER.toString()));
 	}
 }
