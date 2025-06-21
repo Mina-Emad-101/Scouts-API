@@ -5,6 +5,8 @@ package com.scouts.app.Http.Responses;
  */
 public class ErrorResponse extends Response {
 
+	public ErrorResponse() {}
+
 	public ErrorResponse(String message) {
 		super(false, message);
 	}

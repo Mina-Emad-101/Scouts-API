@@ -1,6 +1,7 @@
 package com.scouts.app;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -13,6 +14,9 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.scouts.app.Http.Responses.LoginResponse;
 
 import jakarta.transaction.Transactional;
 
@@ -83,5 +87,33 @@ public class AuthControllerTest {
 				.andExpect(status().isNotFound())
 				.andExpect(jsonPath("$.success").value(false))
 				.andExpect(jsonPath("$.message").isString());
+	}
+
+	@Test
+	public void authUserByToken_ReturnsCorrectUser() throws Exception {
+		String json = """
+				{
+					"email": "user@gmail.com",
+					"password": "password"
+				}
+				""";
+
+		String result = this.mockMvc.perform(
+				post("/api/auth/login")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(json))
+				.andReturn()
+				.getResponse()
+				.getContentAsString();
+
+		ObjectMapper mapper = new ObjectMapper();
+		LoginResponse loginResponse = mapper.readValue(result, LoginResponse.class);
+		String token = loginResponse.getToken();
+
+		this.mockMvc.perform(
+				get("/api/auth/user")
+						.header("Authorization", "Bearer " + token))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.email").value("user@gmail.com"));
 	}
 }
