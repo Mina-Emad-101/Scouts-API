@@ -3,6 +3,7 @@ FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
+RUN sed -i "s/.*\.env.*//" ./src/main/resources/application.properties
 RUN mvn clean package -DskipTests
 
 # Stage 2: Run the JAR
