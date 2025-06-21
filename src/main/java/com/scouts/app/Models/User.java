@@ -1,5 +1,6 @@
 package com.scouts.app.Models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.scouts.app.RepoModels.RepoUser;
 
 import lombok.Data;
@@ -21,10 +22,16 @@ public class User {
 	private String email;
 	private UserRole role;
 
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private String password;
+
+	public User() {}
+
 	public User(RepoUser repoUser) {
 		this.id = repoUser.getId();
 		this.name = repoUser.getName();
 		this.email = repoUser.getEmail();
+		this.password = repoUser.getPassword();
 		this.role = repoUser.getRole();
 	}
 }

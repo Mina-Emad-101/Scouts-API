@@ -1,7 +1,13 @@
 package com.scouts.app.Security.Tokens;
 
 
+import java.util.Collection;
+import java.util.List;
+
 import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+
+import com.scouts.app.Models.User;
 
 /**
  * EmailPasswordAuthenticationToken
@@ -9,8 +15,8 @@ import org.springframework.security.authentication.AbstractAuthenticationToken;
 public class EmailPasswordAuthenticationToken extends AbstractAuthenticationToken {
 	private Object principal;
 
-	public EmailPasswordAuthenticationToken(Object principal) {
-		super(null);
+	public EmailPasswordAuthenticationToken(Object principal, Collection<GrantedAuthority> authorities) {
+		super(authorities);
 		this.principal = principal;
 	}
 

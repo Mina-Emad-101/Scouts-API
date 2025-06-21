@@ -2,11 +2,15 @@ package com.scouts.app.Security.Filters;
 
 import java.io.IOException;
 import java.net.Authenticator;
+import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -58,7 +62,10 @@ public class BearerTokenFilter extends OncePerRequestFilter {
 			return;
 		}
 
-		Authentication authenticationToken = new EmailPasswordAuthenticationToken(user);
+		String role = "ROLE_" + user.getRole();
+		Collection<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(role));
+
+		Authentication authenticationToken = new EmailPasswordAuthenticationToken(user, authorities);
 		authenticationToken.setAuthenticated(true);
 		SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 		

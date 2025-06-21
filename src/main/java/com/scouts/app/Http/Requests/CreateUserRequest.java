@@ -1,15 +1,19 @@
 package com.scouts.app.Http.Requests;
 
+import com.scouts.app.Models.User;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
- * LoginRequest
+ * CreateUserRequest
  */
 @Data
 @AllArgsConstructor
-public class LoginRequest {
+public class CreateUserRequest {
 
+	private String name;
 	private String email;
 	private String password;
+	private User.UserRole role;
 }
