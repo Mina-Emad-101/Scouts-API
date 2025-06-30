@@ -2,6 +2,7 @@ package com.scouts.app.Controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.scouts.app.Exceptions.DuplicateEmailException;
 import com.scouts.app.Exceptions.InvalidLoginException;
 import com.scouts.app.Http.Requests.CreateUserRequest;
 import com.scouts.app.Http.Responses.CreateUserResponse;
@@ -45,7 +46,12 @@ public class UsersController {
 		user.setRole(request.getRole());
 		user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
 
-		User savedUser = this.usersService.save(user);
+		User savedUser = null;
+		try {
+			savedUser = this.usersService.save(user);
+		} catch (DuplicateEmailException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(e.getMessage()));
+		}
 
 		CreateUserResponse response = new CreateUserResponse(savedUser);
 		return ResponseEntity.ok(response);

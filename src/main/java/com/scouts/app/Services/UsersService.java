@@ -9,7 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import com.scouts.app.Repositories.UserRepository;
 import com.scouts.app.RepoModels.RepoUser;
-
+import com.scouts.app.Exceptions.DuplicateEmailException;
 import com.scouts.app.Exceptions.InvalidLoginException;
 import com.scouts.app.Models.User;
 
@@ -35,7 +35,11 @@ public class UsersService {
 		return new User(repoUser);
 	}
 
-	public User save(User user) {
+	public User save(User user) throws DuplicateEmailException {
+		RepoUser duplicateEmailuser = this.userRepository.findByEmail(user.getEmail()).orElse(null);
+		if (duplicateEmailuser != null)
+			throw new DuplicateEmailException(user.getEmail());
+
 		RepoUser repoUser = RepoUser.builder()
 				.name(user.getName())
 				.email(user.getEmail())
