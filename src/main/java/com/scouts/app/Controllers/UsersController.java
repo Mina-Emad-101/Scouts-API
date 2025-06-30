@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.scouts.app.Exceptions.InvalidLoginException;
 import com.scouts.app.Http.Requests.CreateUserRequest;
 import com.scouts.app.Http.Responses.CreateUserResponse;
+import com.scouts.app.Http.Responses.GetUserResponse;
 import com.scouts.app.Http.Responses.ErrorResponse;
 import com.scouts.app.Http.Responses.Response;
 import com.scouts.app.Models.User;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,9 +51,12 @@ public class UsersController {
 		return ResponseEntity.ok(response);
 	}
 
-	// @GetMapping("/user")
-	// public ResponseEntity<Object> user(Authentication authentication) {
-	// 	User user = (User) authentication.getPrincipal();
-	// 	return ResponseEntity.ok(user);
-	// }
+	@GetMapping("/{id}")
+	public ResponseEntity<Response> getUser(@PathVariable Long id) {
+		User user = this.usersService.findById(id);
+		if (user == null)
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("User not found"));
+
+		return ResponseEntity.ok(new GetUserResponse(user));
+	}
 }

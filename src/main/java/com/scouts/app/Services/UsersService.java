@@ -1,5 +1,9 @@
 package com.scouts.app.Services;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -41,5 +45,12 @@ public class UsersService {
 
 		RepoUser savedRepoUser = this.userRepository.save(repoUser);
 		return new User(savedRepoUser);
+	}
+
+	public List<User> all() {
+		List<User> users = new ArrayList<>();
+		this.userRepository.findAll().forEach((RepoUser repoUser) -> users.add(new User(repoUser)));
+
+		return users;
 	}
 }

@@ -40,12 +40,16 @@ public class SecurityConfig {
 						}))
 				.authorizeHttpRequests(authorize -> {
 					// PUBLIC
-					authorize.requestMatchers(
+					authorize.requestMatchers(HttpMethod.GET,
+							"/api/users/*").permitAll();
+
+					authorize.requestMatchers(HttpMethod.POST,
 							"/api/auth/register",
 							"/api/auth/login").permitAll();
 
 					// ADMIN
-					authorize.requestMatchers("/api/users/**").hasRole(User.UserRole.ADMIN.toString());
+					authorize.requestMatchers(HttpMethod.POST,
+							"/api/users").hasRole(User.UserRole.ADMIN.toString());
 
 					authorize.anyRequest().authenticated();
 				})

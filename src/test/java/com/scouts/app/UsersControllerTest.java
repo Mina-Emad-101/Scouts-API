@@ -2,6 +2,7 @@ package com.scouts.app;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,6 +31,7 @@ import jakarta.transaction.Transactional;
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @Sql(scripts = "/test-data.sql")
+@Sql(scripts = "/cleanup.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 @Transactional
 @Rollback
 public class UsersControllerTest {
@@ -143,4 +145,27 @@ public class UsersControllerTest {
 		assertNotNull(user);
 	}
 
+	@Test
+	public void getUserById_Success() throws Exception {
+		this.mockMvc.perform(
+				get("/api/users/1"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.success").value(true))
+				.andExpect(jsonPath("$.user.id").value(1))
+				.andReturn()
+				.getResponse()
+				.getContentAsString();
+	}
+
+
+	@Test
+	public void getUserByWrongId_Fail404() throws Exception {
+		this.mockMvc.perform(
+				get("/api/users/100"))
+				.andExpect(status().isNotFound())
+				.andExpect(jsonPath("$.success").value(false))
+				.andReturn()
+				.getResponse()
+				.getContentAsString();
+	}
 }
