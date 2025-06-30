@@ -6,6 +6,7 @@ import com.scouts.app.Exceptions.InvalidLoginException;
 import com.scouts.app.Http.Requests.LoginRequest;
 import com.scouts.app.Http.Responses.ErrorResponse;
 import com.scouts.app.Http.Responses.LoginResponse;
+import com.scouts.app.Http.Responses.AuthUserResponse;
 import com.scouts.app.Http.Responses.Response;
 import com.scouts.app.Models.User;
 import com.scouts.app.Services.AuthService;
@@ -54,6 +55,6 @@ public class AuthController {
 	@GetMapping("/user")
 	public ResponseEntity<Object> user(Authentication authentication) {
 		User user = (User) authentication.getPrincipal();
-		return ResponseEntity.ok(user);
+		return ResponseEntity.ok(new AuthUserResponse(user));
 	}
 }

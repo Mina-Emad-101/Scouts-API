@@ -134,8 +134,9 @@ public class AuthControllerTest {
 				get("/api/auth/user")
 						.header("Authorization", "Bearer " + token))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.email").value("user@gmail.com"))
-				.andExpect(jsonPath("$.role").value(User.UserRole.USER.toString()));
+				.andExpect(jsonPath("$.success").value(true))
+				.andExpect(jsonPath("$.user.email").value("user@gmail.com"))
+				.andExpect(jsonPath("$.user.role").value(User.UserRole.USER.toString()));
 	}
 
 	@Test
@@ -163,8 +164,9 @@ public class AuthControllerTest {
 				get("/api/auth/user")
 						.header("Authorization", "Bearer " + token))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.email").value("admin@gmail.com"))
-				.andExpect(jsonPath("$.role").value(User.UserRole.ADMIN.toString()));
+				.andExpect(jsonPath("$.success").value(true))
+				.andExpect(jsonPath("$.user.email").value("admin@gmail.com"))
+				.andExpect(jsonPath("$.user.role").value(User.UserRole.ADMIN.toString()));
 	}
 
 	@Test
@@ -192,7 +194,8 @@ public class AuthControllerTest {
 				get("/api/auth/user")
 						.header("Authorization", "Bearer " + token))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.email").value("leader@gmail.com"))
-				.andExpect(jsonPath("$.role").value(User.UserRole.LEADER.toString()));
+				.andExpect(jsonPath("$.success").value(true))
+				.andExpect(jsonPath("$.user.email").value("leader@gmail.com"))
+				.andExpect(jsonPath("$.user.role").value(User.UserRole.LEADER.toString()));
 	}
 }
