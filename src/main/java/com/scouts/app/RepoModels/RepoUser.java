@@ -42,6 +42,6 @@ public class RepoUser {
 	@Enumerated(EnumType.STRING)
 	private User.Sector sector;
 
-	// @OneToMany(mappedBy = "user")
-	// private List<RepoUserAttendance> userAttendances;
+	@OneToMany(mappedBy = "user")
+	private List<RepoUserAttendance> userAttendances;
 }
