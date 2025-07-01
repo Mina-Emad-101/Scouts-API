@@ -51,6 +51,11 @@ public class SecurityConfig {
 					authorize.requestMatchers(HttpMethod.POST,
 							"/api/users").hasRole(User.UserRole.ADMIN.toString());
 
+					// ADMIN or LEADER
+					authorize.requestMatchers(HttpMethod.POST,
+							"/api/attendance/*")
+							.hasAnyRole(User.UserRole.ADMIN.toString(), User.UserRole.LEADER.toString());
+
 					authorize.anyRequest().authenticated();
 				})
 				.addFilterAfter(this.bearerTokenFilter, BasicAuthenticationFilter.class)

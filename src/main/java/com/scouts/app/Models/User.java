@@ -17,10 +17,17 @@ public class User {
 		ADMIN,
 	}
 
+	public enum Sector {
+		ASHBAL,
+		KASHAFA,
+		MOTAKADEM,
+	}
+
 	private Long id;
 	private String name;
 	private String email;
 	private UserRole role;
+	private Sector sector;
 
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
@@ -33,5 +40,6 @@ public class User {
 		this.email = repoUser.getEmail();
 		this.password = repoUser.getPassword();
 		this.role = repoUser.getRole();
+		this.sector = repoUser.getSector();
 	}
 }
